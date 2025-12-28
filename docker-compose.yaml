@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8095:8095"
+    depends_on:
+      - postgres
+    networks:
+      - s-network
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: telsuko
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 9592
+    ports:
+      - "5432:5432"
+    networks:
+      - s-network
+    volumes:
+      - postgres-s-data:/var/lib/postgresql/data
+
+
+networks:
+  s-network:
+   driver: bridge
+
+volumes:
+  postgres-s-data:
+
